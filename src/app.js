@@ -1,12 +1,11 @@
-const express=require("express")
-const app=express()
-const cookieParser=require("cookie-parser")
-const authRoutes=require("./routes/auth.routes")
-const accountrouter=require("./routes/account.routes")
+const express = require("express");
+const app = express();
+const cookieParser = require("cookie-parser");
+const authRoutes = require("./routes/auth.routes");
+const accountrouter = require("./routes/account.routes");
 
-
-app.use(express.json())
-app.use(cookieParser())
-app.use("/api/auth",authRoutes)
-app.use("api/accounts",accountrouter)
-module.exports=app
+app.use(express.json());
+app.use(cookieParser());
+app.use("/api/auth", authRoutes);
+app.use("/api/accounts", accountrouter);
+module.exports = app;

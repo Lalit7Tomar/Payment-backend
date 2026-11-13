@@ -1,22 +1,27 @@
-const usermodel=require("../models/user.models")
-const jwt=require("jsonwebtoken")
-async function Authmiddleware(req,res,next){
-    const token=req.cookies.token || req.headers.authorization?.split(" ")(1)
-    if(!token){
-        return res.status(401).json({
-            message:"Unauthorized access, token is missing"
+const usermodel = require("../models/user.models");
+const jwt = require("jsonwebtoken");
+async function Authmiddleware(req, res, next) {
+  const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({
+      message: "Unauthorized access, token is missing",
+    });
+  }
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userfind = await usermodel.findById(decoded.userid);
+    if (!user) {
+      return res.status(401).json({
+        message: "User not found",
+      });
+    }
 
-        }) 
-    }
-    try{
-      const decoded=jwt.verify(token,process.env.JWT_SECRET)
-      const userfind=await usermodel.findById(decoded.userid)
-      req.user=user
-      return next()
-    }catch(err){
-        return res.status(401).json({
-            message:"Unauthorized access,token is invisible"
-        })
-    }
+    req.user = user;
+    return next();
+  } catch (err) {
+    return res.status(401).json({
+      message: "Unauthorized access,token is invisible",
+    });
+  }
 }
-module.exports=Authmiddleware
+module.exports = Authmiddleware;

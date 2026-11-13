@@ -1,13 +1,15 @@
-const mongoose=require('mongoose')
-function connecttoDB(){
-    if(!process.env.MONGO_URI){
-        console.log("plz provide mongodb uri")
+const mongoose = require("mongoose");
+async function connecttoDB() {
+  try {
+    if (!process.env.MONGO_URI) {
+      console.log("plz provide mongodb uri");
     }
-    mongoose.connect(process.env.MONGO_URI).then(()=>{
-        console.log("Database is connected")
-    }).catch((err)=>{
-        console.log("Database connection failed");
-        process.exit(1)
-    })
+    await mongoose.connect(process.env.MONGO_URI);
+
+    console.log("Database is connected");
+  } catch (err) {
+    console.log("Database connection failed", err);
+    throw err;
+  }
 }
-module.exports =connecttoDB
+module.exports = connecttoDB;
