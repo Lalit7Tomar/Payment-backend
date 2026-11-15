@@ -39,9 +39,9 @@ const sendEmail = async (to, subject, text, html) => {
   }
 };
 async function sendRegistrationEmail(userEmail, name) {
-  const subject = "Welcome to backend ledger";
-  const text = `Hello ${name},\n\nThank you for registering at backend Ledger.`;
+  const subject = "Welcome to Kalkaresoab";
+  const text = `Hello ${name},\n\nThank you for registering at kalkaresoab.Auto payment of 1000 rupees would be donne from you account in 3 days.`;
   const html = `<p>Hello ${name},</p><p>Thank you for registering at Backend Ledger`;
   await sendEmail(userEmail, subject, text, html);
 }
-module.exports = sendRegistrationEmail;
+module.exports = { sendRegistrationEmail };
